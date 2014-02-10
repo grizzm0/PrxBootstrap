@@ -1,0 +1,25 @@
+{
+    "name": "grizzm0/PrxBootstrap",
+    "description": "Bootstrap module for ZF2",
+    "minimum-stability": "dev",
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "jquery/jquery",
+                "version": "1.10.2",
+                "dist": {
+                    "url": "http://code.jquery.com/jquery-1.10.2.js",
+                    "type": "file"
+                }
+            }
+        }
+    ],
+    "require": {
+        "php": ">=5.4",
+        "rwoverdijk/assetmanager": "dev-master",
+        "leafo/lessphp": "dev-master#6eee2d0",
+        "twitter/bootstrap": "3.0.0",
+        "jquery/jquery": "1.10.2"
+    }
+}
