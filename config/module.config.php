@@ -1,4 +1,4 @@
 <?php
 return [
-    'asset_manager'     => include(__DIR__ .'/assetmanager.config.php'),
+    'asset_manager' => require(__DIR__ . '/assetmanager.config.php'),
 ];
