@@ -12,7 +12,7 @@ class Module
     {
         return [
             'Zend\Loader\ClassMapAutoloader' => [
-                __DIR__ . '/../../Classmap.php',
+                __DIR__ . '/../../autoload_classmap.php',
             ],
         ];
     }

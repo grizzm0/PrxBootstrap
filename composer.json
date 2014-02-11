@@ -21,5 +21,10 @@
         "leafo/lessphp": "dev-master#6eee2d0",
         "twitter/bootstrap": "3.0.0",
         "jquery/jquery": "1.10.2"
+    },
+    "autoload": {
+        "psr-0": {
+            "PrxBootstrap": "src/"
+        }
     }
 }
