@@ -11,21 +11,39 @@ use Zend\Form\View\Helper\FormRow as BaseFormRow;
 
 class FormRow extends BaseFormRow
 {
+    protected $inputErrorClass = 'has-error';
+
     public function render(ElementInterface $element)
     {
+        return $this->getOpenTag($element) . parent::render($element) . $this->getCloseTag();
+    }
+
+    public function getOpenTag(ElementInterface $element)
+    {
+        $class = 'form-group';
+
         if (
             $element instanceof Button ||
             $element instanceof MultiCheckbox ||
             $element instanceof Radio ||
             $element instanceof Submit
         ) {
-            return parent::render($element);
+            $class = '';
+        } elseif ($element instanceof Checkbox) {
+            $class = 'checkbox';
         }
 
-        if ($element instanceof Checkbox) {
-            return '<div class="checkbox">'. parent::render($element) .'</div>';
+        $errorClass = $this->getInputErrorClass();
+
+        if (count($element->getMessages()) > 0 && !empty($errorClass)) {
+            $class .= ' '. $errorClass;
         }
 
-        return '<div class="form-group">'. parent::render($element) .'</div>';
+        return '<div class="'. $class .'">';
+    }
+
+    public function getCloseTag()
+    {
+        return '</div>';
     }
 }

@@ -8,12 +8,10 @@ class FormSubmit extends BaseHelper
 {
     public function render(ElementInterface $element)
     {
-        $class = 'btn btn-default';
-        $classAttribute = $element->getAttribute('class');
-        if (!empty($classAttribute)) {
-            $class .= ' '. $classAttribute;
-        }
-        $element->setAttribute('class', $class);
+        $inputClass         = 'btn btn-default';
+        $classAttributes    = ($element->hasAttribute('class') ? $element->getAttribute('class') .' ' : '');
+        $classAttributes    = $classAttributes . $inputClass;
+        $element->setAttribute('class', $classAttributes);
 
         return parent::render($element);
     }
