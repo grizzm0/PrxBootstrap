@@ -15,35 +15,47 @@ class FormRow extends BaseFormRow
 
     public function render(ElementInterface $element)
     {
-        return $this->getOpenTag($element) . parent::render($element) . $this->getCloseTag();
+        return $this->getOpenTag($element) . parent::render($element) . $this->getCloseTag($element);
     }
 
     public function getOpenTag(ElementInterface $element)
     {
-        $class = 'form-group';
-
-        if (
-            $element instanceof Button ||
-            $element instanceof MultiCheckbox ||
-            $element instanceof Radio ||
-            $element instanceof Submit
-        ) {
-            $class = '';
-        } elseif ($element instanceof Checkbox) {
-            $class = 'checkbox';
+        switch ($element->getAttribute('type')) {
+            case 'button':
+            case 'submit':
+                return null;
+            case 'multi_checkbox':
+            case 'radio':
+                $class = null;
+                break;
+            case 'checkbox':
+                $class = 'checkbox';
+                break;
+            default:
+                $class = 'form-group';
         }
 
         $errorClass = $this->getInputErrorClass();
 
         if (count($element->getMessages()) > 0 && !empty($errorClass)) {
-            $class .= ' '. $errorClass;
+            $class = $class ? $class .' '. $errorClass : $errorClass;
+        }
+
+        if (!$class) {
+            return '<div>';
         }
 
         return '<div class="'. $class .'">';
     }
 
-    public function getCloseTag()
+    public function getCloseTag(ElementInterface $element)
     {
+        switch ($element->getAttribute('type')) {
+            case 'button':
+            case 'submit':
+                return null;
+        }
+
         return '</div>';
     }
 }
