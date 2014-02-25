@@ -11,19 +11,23 @@ use Zend\Form\View\Helper\FormRow as BaseFormRow;
 
 class FormRow extends BaseFormRow
 {
-    protected $inputErrorClass = 'has-error';
+    protected $inputErrorClass = '';
 
     public function render(ElementInterface $element)
     {
-        return $this->getOpenTag($element) . parent::render($element) . $this->getCloseTag($element);
+        if (
+            $element->getAttribute('type') == 'button' ||
+            $element->getAttribute('type') == 'submit'
+        ) {
+            return parent::render($element);
+        }
+
+        return $this->getOpenTag($element) . parent::render($element) . $this->getCloseTag();
     }
 
     public function getOpenTag(ElementInterface $element)
     {
         switch ($element->getAttribute('type')) {
-            case 'button':
-            case 'submit':
-                return null;
             case 'multi_checkbox':
             case 'radio':
                 $class = null;
@@ -35,9 +39,8 @@ class FormRow extends BaseFormRow
                 $class = 'form-group';
         }
 
-        $errorClass = $this->getInputErrorClass();
-
-        if (count($element->getMessages()) > 0 && !empty($errorClass)) {
+        if (count($element->getMessages()) > 0) {
+            $errorClass = 'has-error';
             $class = $class ? $class .' '. $errorClass : $errorClass;
         }
 
@@ -48,14 +51,8 @@ class FormRow extends BaseFormRow
         return '<div class="'. $class .'">';
     }
 
-    public function getCloseTag(ElementInterface $element)
+    public function getCloseTag()
     {
-        switch ($element->getAttribute('type')) {
-            case 'button':
-            case 'submit':
-                return null;
-        }
-
         return '</div>';
     }
 }
