@@ -15,10 +15,9 @@ class FormRow extends BaseFormRow
 
     public function render(ElementInterface $element)
     {
-        if (
-            $element->getAttribute('type') == 'button' ||
-            $element->getAttribute('type') == 'reset' ||
-            $element->getAttribute('type') == 'submit'
+        if ($element->getAttribute('type') == 'button'
+            || $element->getAttribute('type') == 'reset'
+            || $element->getAttribute('type') == 'submit'
         ) {
             return parent::render($element);
         }
